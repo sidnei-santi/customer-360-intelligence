@@ -1,0 +1,24 @@
+bundle:
+  name: customer-360-intelligence
+
+targets:
+  dev:
+    default: true
+    workspace:
+      host: https://dbc-cbcf3b51-4967.cloud.databricks.com/
+      root_path: /Workspace/Users/${workspace.current_user.userName}/.bundle/${bundle.name}/${bundle.target}
+
+resources:
+  jobs:
+    customer_360_pipeline:
+      name: "[DEV] Customer 360 Ingestion & Transformation Job"
+      tasks:
+        - task_key: bronze_ingestion
+          notebook_task:
+            notebook_path: databricks/notebooks/01_bronze_ingestion.py
+
+        - task_key: silver_transformation
+          depends_on:
+            - task_key: bronze_ingestion
+          notebook_task:
+            notebook_path: databricks/notebooks/02_silver_transformations.py
