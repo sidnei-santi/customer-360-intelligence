@@ -22,3 +22,7 @@ resources:
             - task_key: bronze_ingestion
           notebook_task:
             notebook_path: databricks/notebooks/02_silver_transformations.py
+
+        - task_key: kaggle_bronze_ingestion
+          notebook_task:
+            notebook_path: databricks/notebooks/03_kaggle_bronze_ingestion.py

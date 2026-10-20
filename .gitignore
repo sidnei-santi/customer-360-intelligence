@@ -3,3 +3,5 @@ __pycache__/
 .env
 .databricks/
 data/synthetic/*.csv
+data/kaggle/*.csv
+data/kaggle/*.zip
