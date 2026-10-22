@@ -17,23 +17,22 @@ jobs:
         with:
           python-version: '3.10'
 
-      - name: Install Databricks CLI
+      - name: Install Databricks CLI (with bundle support)
         run: |
           python -m pip install --upgrade pip
-          pip install databricks-cli
-
-      - name: Configure Databricks authentication
-        run: |
-          databricks configure --token <<EOF
-          ${{ secrets.DATABRICKS_HOST }}
-          ${{ secrets.DATABRICKS_TOKEN }}
-          EOF
+          pip install "databricks-cli>=0.205.0"
 
       - name: Validate Databricks Bundle before deploy
+        env:
+          DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
+          DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
         run: |
           databricks bundle validate
 
       - name: Deploy to Databricks workspace
+        env:
+          DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
+          DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
         run: |
           databricks bundle deploy
 
